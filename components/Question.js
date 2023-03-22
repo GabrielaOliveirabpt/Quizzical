@@ -30,7 +30,7 @@ export default function Question(props) {
     
     return (
         <div className="container-question">
-            <h4 className="question">{props.question}</h4>
+            <h4 className="question">{decodeURIComponent(props.question)}</h4>
             <div className="container-btn-answers">
                 <button 
                     disabled={props.checkedAnswPress}

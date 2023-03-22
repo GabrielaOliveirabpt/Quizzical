@@ -437,135 +437,85 @@ function App() {
         quizzData = _React$useState6[0],
         setQuizzData = _React$useState6[1];
 
-    // holds the info of the questions
-
-
-    var _React$useState7 = _react2.default.useState([]),
-        _React$useState8 = _slicedToArray(_React$useState7, 2),
-        questions = _React$useState8[0],
-        setQuestions = _React$useState8[1];
-
     // allows the button check answers to be pressed
 
 
-    var _React$useState9 = _react2.default.useState(false),
-        _React$useState10 = _slicedToArray(_React$useState9, 2),
-        allComplete = _React$useState10[0],
-        setAllComplete = _React$useState10[1];
+    var _React$useState7 = _react2.default.useState(false),
+        _React$useState8 = _slicedToArray(_React$useState7, 2),
+        allComplete = _React$useState8[0],
+        setAllComplete = _React$useState8[1];
 
     // shows the answers on the buttons changing their colors to green and pink
 
 
-    var _React$useState11 = _react2.default.useState(false),
-        _React$useState12 = _slicedToArray(_React$useState11, 2),
-        checkedAnswPress = _React$useState12[0],
-        setCheckedAnswPress = _React$useState12[1];
+    var _React$useState9 = _react2.default.useState(false),
+        _React$useState10 = _slicedToArray(_React$useState9, 2),
+        checkedAnswPress = _React$useState10[0],
+        setCheckedAnswPress = _React$useState10[1];
 
     // count the amount of correct answers
 
 
-    var _React$useState13 = _react2.default.useState(0),
-        _React$useState14 = _slicedToArray(_React$useState13, 2),
-        count = _React$useState14[0],
-        setCount = _React$useState14[1];
+    var _React$useState11 = _react2.default.useState(0),
+        _React$useState12 = _slicedToArray(_React$useState11, 2),
+        count = _React$useState12[0],
+        setCount = _React$useState12[1];
 
-    var _React$useState15 = _react2.default.useState(false),
-        _React$useState16 = _slicedToArray(_React$useState15, 2),
-        playAgain = _React$useState16[0],
-        setPlayAgain = _React$useState16[1];
+    var _React$useState13 = _react2.default.useState(false),
+        _React$useState14 = _slicedToArray(_React$useState13, 2),
+        playAgain = _React$useState14[0],
+        setPlayAgain = _React$useState14[1];
 
     // save in the quizzData in a accessible way the info from the api -
 
 
     _react2.default.useEffect(function () {
-        // let isMounted = true;   
         setLoading(true);
 
-        fetch("https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=boolean").then(function (res) {
+        fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=boolean&encode=url3986").then(function (res) {
             return res.json();
         }).then(function (data) {
-            return setQuizzData(data.results);
-        })
-        // return () => { isMounted = false }; 
-        .then(function () {
+            return setQuizzData(data.results.map(function (questionObj, item) {
+                return {
+                    id: (0, _nanoid.nanoid)(),
+                    question: questionObj.question,
+                    selected_Answer: undefined,
+                    correct_Answer: questionObj.correct_answer
+                };
+            }));
+        }).then(function () {
             return setLoading(false);
         });
     }, [playAgain]);
 
-    // it needs to have a function to reload app !!!!
+    // reloads the app
     function handlePlayAgain() {
         setPlayAgain(true);
         setPressStartQuiz(false);
         setCheckedAnswPress(false);
         setAllComplete(false);
         setQuizzData([]);
-        setQuestions([]);
         setCount(0);
     }
 
     // changes the state allComplete to true if all the questions have one selected_Answer so it can allow the Check Answers button to go from disabled to enabled  
     _react2.default.useEffect(function () {
-        setAllComplete(questions.every(function (item) {
+        setAllComplete(quizzData.every(function (item) {
             return typeof item.selected_Answer !== "undefined";
         }));
-    }, [questions]);
+    }, [quizzData]);
 
     function handleStartQuizz() {
         setPlayAgain(false);
-
         setPressStartQuiz(true);
-        setQuestions(getQuestions());
-    }
-
-    // get the questions and save it in a object, then in an arr of objs so later it can save it to the state arr questions
-    function getQuestions() {
-        var arrObjQuestions = [];
-        for (var i = 0; i < 2; i++) {
-            var question = translateQuestionSymbols(i);
-            var correct_answer = quizzData[i].correct_answer;
-            var objQuestion = {
-                question: question,
-                selected_Answer: undefined,
-                correct_Answer: correct_answer,
-                id: (0, _nanoid.nanoid)()
-            };
-            arrObjQuestions.push(objQuestion);
-        }
-        return arrObjQuestions;
-    }
-
-    function translateQuestionSymbols(i) {
-        var string = quizzData[i].question;
-        if (string.includes('&#039;')) {
-            string = string.replaceAll('&#039;', "'");
-        }
-        if (string.includes("&quot;")) {
-            string = string.replaceAll("&quot;", '"');
-        }
-        if (string.includes("&eacute;")) {
-            string = string.replaceAll("&eacute;", "é");
-        }
-        if (string.includes("&ldquo;")) {
-            string = string.replaceAll("&ldquo;", '"');
-        }
-        if (string.includes("&rdquo;")) {
-            string = string.replaceAll("&rdquo;", '"');
-        }
-        if (string.includes("&rsquo;")) {
-            string = string.replaceAll("&rsquo;", "'");
-        }
-        if (string.includes("&lsquo;")) {
-            string = string.replaceAll("&lsquo;", "'");
-        }
-        return string;
     }
 
     // will update the arr state questions to save it to the state. needs to use an id
     function selectAnswer(id) {
         var value = event.target.value;
 
-        setQuestions(function (prevQuestions) {
-            return prevQuestions.map(function (questionObj) {
+        setQuizzData(function (prevQuizzData) {
+            return prevQuizzData.map(function (questionObj) {
                 return questionObj.id === id ? _extends({}, questionObj, { selected_Answer: value }) : questionObj;
             });
         });
@@ -578,8 +528,8 @@ function App() {
 
     function countingCorrectAnswers() {
         var counter = 0;
-        for (var i = 0; i < 2; i++) {
-            var questionObj = questions[i];
+        for (var i = 0; i < quizzData.length; i++) {
+            var questionObj = quizzData[i];
             if (questionObj.correct_Answer === questionObj.selected_Answer) {
                 counter = counter + 1;
             }
@@ -593,7 +543,7 @@ function App() {
         loading && _react2.default.createElement("div", { className: "loading-message" }),
         !pressStartQuizz && _react2.default.createElement(_StartQuizz2.default, { handleStartQuizz: handleStartQuizz }),
         pressStartQuizz && _react2.default.createElement(_Questions2.default, {
-            questions: questions,
+            questions: quizzData,
             checkedAnswPress: checkedAnswPress,
             selectAnswer: selectAnswer,
             handleCheckAnswers: handleCheckAnswers,
@@ -604,44 +554,8 @@ function App() {
     );
 }
 
+// to load the data on screen
 // <pre>{JSON.stringify(quizzData, null, 2)}</pre>
-
-// React.useEffect(() => { 
-//     setCount(countingCorrectAnswers())
-// }, [checkedAnswPress])
-
-// code from stackoverflow to solve error
-//  React.useEffect(() => { 
-//     let isMounted = true;  
-//     countingCorrectAnswers().then(data => {
-//         if(isMounted) {setCount(data)}
-//     })                     
-//     return () => { isMounted = false };
-// }, [checkedAnswPress])
-
-// useEffect(() => {
-//     let isMounted = true;               // note mutable flag
-//     someAsyncOperation().then(data => {
-//         if (isMounted) setState(data);    // add conditional check
-//     })
-//     return () => { isMounted = false }; // cleanup toggles value, if unmounted
-// }, []); 
-
-
-// option of using only one state for questions/quizzData
-// React.useEffect(() => { 
-//     setAllComplete(questions.every(item => typeof item.selected_Answer !== undefined ))
-// }, [questions])
-
-// .then(data => setQuizData(data.results.map(item => {
-//             return({
-//                     id: nanoid(),
-//                     question: item.question,
-//                     options: shuffle(item.incorrect_answers.concat([item.correct_answer])).map(item => {return { id: nanoid(), optionText: item }}),
-//                     selectedAnswer: undefined,
-//                     correctAnswer: item.correct_answer
-//                 })
-// })))
 
 /***/ }),
 /* 5 */
@@ -739,7 +653,7 @@ function Question(props) {
         _react2.default.createElement(
             "h4",
             { className: "question" },
-            props.question
+            decodeURIComponent(props.question)
         ),
         _react2.default.createElement(
             "div",
@@ -839,6 +753,8 @@ function Questions(props) {
             { className: "text-center" },
             "You scored ",
             props.count,
+            "/",
+            props.questions.length,
             " correct answer(s)"
         )
     );

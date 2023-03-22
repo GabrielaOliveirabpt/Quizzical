@@ -38,7 +38,7 @@ export default function Questions(props) {
             }
             
         </div>
-        {props.checkedAnswPress && <p className="text-center">You scored {props.count} correct answer(s)</p>}
+        {props.checkedAnswPress && <p className="text-center">You scored {props.count}/{props.questions.length} correct answer(s)</p>}
         
         
       </div>  
