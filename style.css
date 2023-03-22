@@ -1,0 +1,136 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Karla', sans-serif;
+    color: #293264;
+}
+
+body {
+    background-color: #161b35;
+}
+
+.container-App {
+    width: 850px;
+    min-height: 80vh;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    background-color: #F5F7FB;
+}
+
+.container-startQuizz {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-content: center;
+    margin-top: 20%;
+}
+
+.loading-message {
+    text-align: center;
+}
+
+.appTitle {
+    font-size: 32px;
+}
+
+.quizz-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+}
+
+.btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    margin-top: 18px;
+    background-color: #4D5B9E;
+    color: white;
+    width: 193px;
+    height: 52px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn:active {
+    box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
+.container-questions {
+    padding: 20px 55px;  
+}
+
+.container-question {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #DBDEF0;
+}
+
+.question {
+    font-size: 18px;
+}
+
+.container-btn-answers {
+    display: flex;
+    flex-direction: row;
+}
+
+.btn-answer {
+    font-family: 'Inter', sans-serif; 
+    font-size: 11px;
+    padding: 4px 18px;
+    border: 1px solid #4D5B9E;
+    border-radius: 8px;
+    background-color: #F5F7FB;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.btn-answer:focus {
+    outline: none;
+}
+.btn-answer:disabled,
+.btn-answer[disabled] {
+    opacity: 0.5;
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+.btn-check-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-check {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    margin-top: 20px;
+    background-color: #4D5B9E;
+    color: white;
+    padding: 11px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.btn-check:focus {
+    outline: none;
+}
+.btn-check:active {
+    box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+.btn-check:disabled,
+.btn-check[disabled] {
+    opacity: 0.5;
+    box-shadow: inset 5px 5px 10px -3px rgba(0, 0, 0, 0.7);
+}
+
