@@ -17,3 +17,5 @@ Run Webpack in watch-mode to continually compile the JavaScript as you work:
 ```
 $ yarn watch # npm run watch
 ```
+
+Here you can find the deployed version: https://gabrielaoliveirabpt.github.io/Quizzical/

@@ -97,7 +97,7 @@ body {
 }
 .btn-answer:disabled,
 .btn-answer[disabled] {
-    opacity: 0.5;
+    opacity: 0.7;
 }
 
 .text-center {
